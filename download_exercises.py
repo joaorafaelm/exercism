@@ -6,7 +6,7 @@ import subprocess
 
 
 # Replace this with your language
-LANGUAGE = "python"
+LANGUAGE = "awk"
 
 def download_exercises():
     # Get the html from the exercism page
@@ -28,6 +28,8 @@ def download_exercises():
             print (f"{exercise} exercise locked")
             os._exit(1)
         print (f"{exercise} downloaded")
+        # one at a time
+        os._exit(1)
 
     print("Total downloads: ", num_downloads)
 
