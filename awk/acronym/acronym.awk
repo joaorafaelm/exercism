@@ -1,6 +1,7 @@
 {
+    gsub(/'/,"")
+    gsub(/[^[:alnum:][:space:]]/," ")
     for (i=1; i<=NF;i++) {
-        printf(substr($i, 1, 1))
+        printf(toupper(substr($i, 1, 1)))
     }
-
 }
