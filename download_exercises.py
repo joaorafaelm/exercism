@@ -6,7 +6,7 @@ import subprocess
 
 
 # Replace this with your language
-LANGUAGE = "awk"
+LANGUAGE = os.environ["LANGUAGE"]
 
 def download_exercises():
     # Get the html from the exercism page
