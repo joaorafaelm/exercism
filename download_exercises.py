@@ -16,22 +16,16 @@ def download_exercises():
     # Each exercise is in the form "/tracks/python/"exerciseName&
     regex_string = r"tracks/" + LANGUAGE + "/exercises/(.*?)&"
     all_matches = re.findall(regex_string, page_html)
-    num_downloads = 0
     for exercise in all_matches:
-        num_downloads += 1
         download_command = f"exercism download --exercise={exercise} --track={LANGUAGE}"
         command = subprocess.run(download_command.split(" "), capture_output=True)
         if "already exists" in str(command.stderr):
-            print(f"{exercise} already exists")
             continue
         elif "not unlocked" in str(command.stderr):
             print (f"{exercise} exercise locked")
-            os._exit(1)
+            os._exit(0)
         print (f"{exercise} downloaded")
-        # one at a time
-        os._exit(1)
-
-    print("Total downloads: ", num_downloads)
+        os._exit(0)
 
 
 if __name__ == "__main__":
