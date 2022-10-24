@@ -1,11 +1,11 @@
 .ONESHELL:
 
 download:
-	@python download_exercises.py
+	@python exercises.py
 
 new: download
 	@set -e; \
-	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x list_stars.py); \
+	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py); \
 	FILE=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /awk$$/ {print}'); \
 	README=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /README/ {print}'); \
 	TEST_FILE=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /test/ {print}'); \
@@ -21,4 +21,4 @@ submit:
 	git add . && git commit -m 'add new exercise' && git push
 
 solutions:
-	@python list_stars.py
+	@python solutions.py | fzf --preview "bat --color=always -p {}" | xargs nvr --remote -o

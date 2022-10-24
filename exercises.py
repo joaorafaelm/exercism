@@ -4,10 +4,16 @@ import os
 
 import subprocess
 
+from joblib import Memory
+
+cache_path = "/tmp/exercism_cache"
+os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+memory = Memory(cache_path, verbose=0)
 
 LANGUAGE = os.environ.get("LANGUAGE", "awk")
 
-def download_exercises():
+@memory.cache
+def download_exercises(LANGUAGE):
     pageURL = "https://exercism.org/tracks/" + LANGUAGE + "/exercises"
     page_html = requests.get(pageURL).content.decode("utf-8")
     regex_string = r"tracks/" + LANGUAGE + "/exercises/(.*?)&"
@@ -28,4 +34,4 @@ def download_exercises():
 
 
 if __name__ == "__main__":
-    download_exercises()
+    download_exercises(LANGUAGE)
