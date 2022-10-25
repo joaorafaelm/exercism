@@ -3,7 +3,7 @@
 download:
 	@python exercises.py
 
-new: download
+new:
 	@set -e; \
 	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py); \
 	FILE=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /awk$$/ {print}'); \
