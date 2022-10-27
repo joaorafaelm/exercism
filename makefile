@@ -20,4 +20,4 @@ submit:
 	git add . && git commit -m 'add new exercise' && git push
 
 solutions:
-	@python solutions.py | fzf --preview "bat --color=always -p {}" | xargs nvr --remote -o
+	@python -u solutions.py | fzf --preview "bat --color=always -p {}" | xargs nvr --remote -o
