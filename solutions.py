@@ -35,14 +35,15 @@ def solutions():
         author = solution["author"]["handle"]
         filename = f"/tmp/{LANGUAGE}/{EXERCISE}/{author}.awk"
         os.makedirs(os.path.dirname(filename), exist_ok=True)
-        print(filename)
         if os.path.isfile(filename):
+            print(filename)
             continue
         with open(filename, "w") as f:
             solution_url = solution["links"]["public_url"]
             files = get_page_data(solution_url)["iterations"][-1]["links"]["files"]
             content = json.loads(requests.get(files).content.decode("utf-8"))["files"][0]["content"].rstrip("\n").rstrip()
             f.write(content)
+        print(filename)
 
 
 
