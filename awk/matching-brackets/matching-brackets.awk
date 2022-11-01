@@ -8,5 +8,5 @@
             else { print "false"; exit }
         }
     }
-    print (!opened) ? "true": "false"
+    print !opened ? "true": "false"
 }
