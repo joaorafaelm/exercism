@@ -23,6 +23,7 @@ def download_exercises(LANGUAGE):
             continue
         download_command = f"exercism download --exercise={exercise} --track={LANGUAGE}"
         command = subprocess.run(download_command.split(" "), capture_output=True)
+        print(str(command.stderr))
         if "already exists" in str(command.stderr):
             continue
         elif "not unlocked" in str(command.stderr):
