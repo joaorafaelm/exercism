@@ -13,18 +13,18 @@ download:
 new:
 	@set -e; \
 	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py -x .gitignore -x .pytest_cache); \
-	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | awk '$$1 ~ /$(EXT)$$/ {print}'); \
+	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	README=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /README/ {print}'); \
-	TEST_FILE=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /test/ {print}'); \
 	nvr --remote-silent -cc only --servername $$NVIM && \
-	nvr --remote-silent -O $$FILE $$README $$TEST_FILE --servername $$NVIM && \
+	nvr --remote-silent -O $$FILE $$README --servername $$NVIM && \
 	if [ "$(LANGUAGE)" == 'awk' ]; then cd $$DIR && find . -name '*.$(LANGUAGE)' | BATS_RUN_SKIPPED=true entr -c bats test*; fi && \
 	if [ "$(LANGUAGE)" == 'python' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c pytest; fi
+	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi
 
 
 submit:
 	@set -e; \
-	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | awk '$$1 ~ /$(EXT)$$/ {print}'); \
+	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	exercism submit $$FILE
 	git add . && git commit -m 'add new exercise' && git push
 
