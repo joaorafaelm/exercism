@@ -1,10 +1,10 @@
 .ONESHELL:
 
--include .env
-export
-
 export LANGUAGE=$(shell [[ "$$LANGUAGE" ]] && echo $$LANGUAGE || echo awk)
 export EXT=$(shell [[ "$$EXT" ]] && echo $$EXT || echo awk)
+
+-include .env
+export
 
 
 download:
@@ -12,7 +12,7 @@ download:
 
 new:
 	@set -e; \
-	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py); \
+	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py -x .gitignore -x .pytest_cache); \
 	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	README=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /README/ {print}'); \
 	TEST_FILE=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /test/ {print}'); \
