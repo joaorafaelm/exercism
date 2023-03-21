@@ -18,9 +18,9 @@ new:
 	nvr --remote-silent -cc only --servername $$NVIM && \
 	nvr --remote-silent -O $$FILE $$README --servername $$NVIM && \
 	if [ "$(LANGUAGE)" == 'awk' ]; then cd $$DIR && find . -name '*.$(LANGUAGE)' | BATS_RUN_SKIPPED=true entr -c bats test*; fi && \
-	if [ "$(LANGUAGE)" == 'python' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c pytest; fi
-	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi
-	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi
+	if [ "$(LANGUAGE)" == 'python' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c pytest; fi && \
+	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi && \
+	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi
 
 
 submit:
