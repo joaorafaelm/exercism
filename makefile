@@ -20,6 +20,7 @@ new:
 	if [ "$(LANGUAGE)" == 'awk' ]; then cd $$DIR && find . -name '*.$(LANGUAGE)' | BATS_RUN_SKIPPED=true entr -c bats test*; fi && \
 	if [ "$(LANGUAGE)" == 'python' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c pytest; fi
 	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi
+	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi
 
 
 submit:
