@@ -20,12 +20,13 @@ new:
 	if [ "$(LANGUAGE)" == 'awk' ]; then cd $$DIR && find . -name '*.$(LANGUAGE)' | BATS_RUN_SKIPPED=true entr -c bats test*; fi && \
 	if [ "$(LANGUAGE)" == 'python' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c pytest; fi && \
 	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi && \
-	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi
+	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi && \
+	if [ "$(LANGUAGE)" == 'haskell' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c stack test; fi
 
 
 submit:
 	@set -e; \
-	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | awk '$$1 ~ /$(EXT)$$/ {print}'); \
+	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | grep -v autogen | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	exercism submit $$FILE
 	git add . && git commit -m 'add new exercise' && git push
 
