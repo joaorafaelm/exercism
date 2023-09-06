@@ -13,7 +13,7 @@ download:
 new:
 	@set -e; \
 	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py -x .gitignore -x .pytest_cache); \
-	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | awk '$$1 ~ /$(EXT)$$/ {print}'); \
+	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | grep -v autogen | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	README=$(shell git ls-files --others --exclude-standard | awk '$$1 ~ /README/ {print}'); \
 	nvr --remote-silent -cc only --servername $$NVIM && \
 	nvr --remote-silent -O $$FILE $$README --servername $$NVIM && \
