@@ -9,9 +9,9 @@ cache_path = "/tmp/exercism_cache"
 os.makedirs(os.path.dirname(cache_path), exist_ok=True)
 memory = Memory(cache_path, verbose=0)
 
-
-LANGUAGE = os.environ.get("LANGUAGE", "awk")
-EXERCISE = os.environ.get("EXERCISE", "two-fer")
+LANGUAGE = os.environ.get("LANGUAGE", "haskell")
+EXERCISE = os.environ.get("EXERCISE", "space-age")
+EXT = os.environ.get("EXT", "hs")
 
 @memory.cache
 def get_page_data(url):
@@ -24,7 +24,6 @@ def get_page_data(url):
             return exercise
 
 
-
 def solutions():
     page_url = f"https://exercism.org/tracks/{LANGUAGE}/exercises/{EXERCISE}/solutions/?passed_tests=true&up_to_date=true"
     exercises = get_page_data(page_url)
@@ -33,7 +32,7 @@ def solutions():
 
     for solution in solutions:
         author = solution["author"]["handle"]
-        filename = f"/tmp/{LANGUAGE}/{EXERCISE}/{author}.awk"
+        filename = f"/tmp/{LANGUAGE}/{EXERCISE}/{author}.{EXT}"
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         if os.path.isfile(filename):
             print(filename)
@@ -44,8 +43,6 @@ def solutions():
             content = json.loads(requests.get(files).content.decode("utf-8"))["files"][0]["content"].rstrip("\n").rstrip()
             f.write(content)
         print(filename)
-
-
 
 
 if __name__ == "__main__":

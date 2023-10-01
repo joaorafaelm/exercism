@@ -6,7 +6,6 @@ export EXT=$(shell [[ "$$EXT" ]] && echo $$EXT || echo awk)
 -include .env
 export
 
-
 download:
 	@python exercises.py
 
@@ -22,7 +21,6 @@ new:
 	if [ "$(LANGUAGE)" == 'lua' ]; then cd $$DIR && find . -name '*.$(EXT)' | entr -c busted; fi && \
 	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi && \
 	if [ "$(LANGUAGE)" == 'haskell' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c stack test; fi
-
 
 submit:
 	@set -e; \
