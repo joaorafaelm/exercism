@@ -1,5 +1,3 @@
-The following command downloads a new exercise and opens it in neovim using neovim-remote
-
 # Pre-requisites
 - neovim
 - neovim-remote
@@ -15,6 +13,8 @@ EXT=hs
 ```
 
 # Download new exercise and open on neovim
+The following command downloads a new exercise and opens it in neovim using neovim-remote
+
 ```
 make download && make new
 ```
