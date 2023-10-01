@@ -6,10 +6,15 @@ export EXT=$(shell [[ "$$EXT" ]] && echo $$EXT || echo awk)
 -include .env
 export
 
-download:
+all: help
+
+help: # display callable targets
+	@sed -n 's/:.*#/:/p' Makefile | grep -v sed
+
+download: # download the next exercise
 	@python exercises.py
 
-new:
+new: # based on git, open the downloaded exercise
 	@set -e; \
 	DIR=$(shell git ls-files --others --exclude-standard --directory -x makefile -x solutions.py -x exercises.py -x .gitignore -x .pytest_cache); \
 	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | grep -v autogen | awk '$$1 ~ /$(EXT)$$/ {print}'); \
@@ -22,11 +27,11 @@ new:
 	if [ "$(LANGUAGE)" == 'rust' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c cargo test; fi && \
 	if [ "$(LANGUAGE)" == 'haskell' ]; then cd $$DIR && echo $$DIR && find . -name '*.$(EXT)' | entr -c stack test; fi
 
-submit:
+submit: # submit the exercise and commit to git
 	@set -e; \
 	FILE=$(shell git ls-files --others --exclude-standard | grep -v test | grep -v _spec | grep -v autogen | awk '$$1 ~ /$(EXT)$$/ {print}'); \
 	exercism submit $$FILE
 	git add . && git commit -m 'add new exercise' && git push
 
-solutions:
+solutions: # open the solutions using fzf and bat
 	@python -u solutions.py | fzf --preview "bat --color=always -p {}" | xargs nvr --remote --servername $$NVIM -o
